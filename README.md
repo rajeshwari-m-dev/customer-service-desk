@@ -64,11 +64,11 @@ The app is then at http://localhost:8000/docs. Keys come from `.env` at run time
 
 ## Deployment on AWS
 
+## Deployment on AWS
+
 The Docker image was pushed to Amazon ECR and run on Amazon ECS with Fargate. I tested `/evaluate-file` end to end on the running task.
 
-While deploying, the app failed because the environment variables were missing from the ECS task definition. I found this in the CloudWatch logs, added the variables in a new task revision, and redeployed. The service is now scaled to zero to avoid cost, so there is no live link.
-
-Next step I would take: keep API keys in AWS Secrets Manager instead of plain task variables.
+The first run failed with a 500 error. The CloudWatch logs showed `LLM_PROVIDER is not set in env`, because the variables were missing from the ECS task definition. I added them in a new task revision and redeployed, and the endpoint worked. The service is now scaled to zero to avoid cost, so there is no live link.
 
 ## Data
 
